@@ -1,0 +1,32 @@
+@font-face
+{
+    font-family:'Open Sans Light';
+    src: url('../misc/open-sans.light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
+
+#center_container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin-top: -125px; /* Half the height */
+    margin-left: -125px; /* Half the width */
+}
+
+.text {
+    position: relative;
+    top: -5px;
+    font-family: 'Open Sans Light', sans-serif;
+    font-size: 25pt;
+    font-weight: 300;
+}
+
+.text a {
+    color: #000;
+    text-decoration: none;
+}
+
+#files td.del {
+    text-align: right;
+}

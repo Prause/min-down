@@ -1,0 +1,20 @@
+## min-down - A Minimal Up-/Download WebApp
+
+This is a minimalistic up- and download webapp. It runs bottle.py with python3
+in the background and the usual HTML5,CSS,JS combination on the client side.
+
+This app is meant to be played around with, to be learnt from (observe the
+object oriented usage of bottle.py ;) ), re-used for other projects or to serve
+the simple need of an easy-to-use, fast-to-deploy up- and download webapp.
+
+Just run
+
+```
+python3 app.py
+```
+
+and the app will be up and running on port 8899.
+(Go to http://localhost:8899/ in your browser)
+
+Any problems, questions or feature requests: Open an issue at
+https://github.com/Prause/min-down
