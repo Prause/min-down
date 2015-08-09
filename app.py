@@ -15,6 +15,8 @@ class DownApp (Bottle):
         super(DownApp, self).__init__()
         self.ROOT_DIR = path.abspath(path.dirname(__file__))
         self.REQUIRE_LOGIN = False
+        self.var_down = path.join( self.ROOT_DIR, 'var/down/' )
+        self.var_olddown = path.join( self.ROOT_DIR, 'var/olddown/' )
 
         # config
         self.config = {}
@@ -23,10 +25,10 @@ class DownApp (Bottle):
                 self.config = json.loads( fh.read() )
 
         # var paths
-        if not path.isdir( path.join( self.ROOT_DIR, 'var/down/' )):
-            makedirs( path.join( self.ROOT_DIR, 'var/down/' ))
-        if not path.isdir( path.join( self.ROOT_DIR, 'var/olddown/' )):
-            makedirs( path.join( self.ROOT_DIR, 'var/olddown/' ))
+        if not path.isdir( self.var_down ):
+            makedirs( self.var_down )
+        if not path.isdir( self.var_olddown ):
+            makedirs( self.var_olddown )
 
 
     def initRoutes(self, root='/'):
@@ -44,12 +46,12 @@ class DownApp (Bottle):
 
     def down_main(self):
         print( 'down: main' )
-        return template( 'templates/down.tpl', down_root=self.ROOT_DIR, doc_root=self.url_base )
+        return template( 'templates/down.tpl', down_root=self.var_down, doc_root=self.url_base )
 
 
     def down_file(self, filename):
         print( 'down: requesting ' + filename )
-        return static_file(filename, root=path.join( self.ROOT_DIR, 'var/down/'))
+        return static_file(filename, root=self.var_down)
 
 
     def delete_file(self, filename):
@@ -58,9 +60,10 @@ class DownApp (Bottle):
             redirect("/login")
         else:
             print( 'down: deleting ' + filename )
-            if( path.isfile( path.join(self.ROOT_DIR, 'var/down/', filename) )):
-                shutil.move( path.join(self.ROOT_DIR, 'var/down/', filename),
-                    path.join(self.ROOT_DIR, 'var/olddown/', filename))
+            if( path.isfile(path.join(self.var_down, filename))):
+                shutil.move(
+                        path.join(self.var_down, filename),
+                        path.join(self.var_olddown, filename))
             redirect( self.url_root )
 
 
@@ -74,7 +77,7 @@ class DownApp (Bottle):
         uploads = request.files.getall('upload')
         for upload in uploads:
             print( "  " + upload.filename )
-            upload.save( path.join( self.ROOT_DIR, 'var/down/')) # appends upload.filename automatically
+            upload.save(self.var_down) # appends upload.filename automatically
         return "OK";
 
 

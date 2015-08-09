@@ -19,8 +19,8 @@
         <table id="files">
             <tbody>
         <%
-         onlyfiles = [ f for f in listdir(join( down_root, 'var/down/')) if isfile(join( down_root, 'var/down/',f)) ]
-         for item in onlyfiles:
+         onlyfiles = [ f for f in listdir( down_root ) if isfile(join( down_root, f )) ]
+         for item in sorted(onlyfiles):
         %>
             <tr>
                 <td class="file"><a href="file/{{item}}">{{item}}</a></td>
